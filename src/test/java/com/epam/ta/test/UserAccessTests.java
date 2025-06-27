@@ -2,9 +2,8 @@ package com.epam.ta.test;
 
 import com.epam.ta.model.User;
 import com.epam.ta.page.LoginPage;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 
 public class UserAccessTests extends CommonConditions {
@@ -22,7 +21,7 @@ public class UserAccessTests extends CommonConditions {
 				.openPage()
 				.uc1(testUser)
 				.checkErrorContains(USERNAME_ERROR);
-		Assert.assertTrue(usernameError, "Username error not found");
+		Assert.assertTrue( "Username error not found", usernameError);
 	}
 
 	/*Type any credentials in username.
@@ -32,11 +31,11 @@ public class UserAccessTests extends CommonConditions {
 	@Test
 	public void uc2(){
 		User testUser = new User("Petro", "Password");
-		boolean usernameError = new LoginPage(driver)
+		boolean passwordError = new LoginPage(driver)
 				.openPage()
-				.uc1(testUser)
-				.checkErrorContains(USERNAME_ERROR);
-		Assert.assertTrue(usernameError, "Username error not found");
+				.uc2(testUser)
+				.checkErrorContains(PASSWORD_ERROR);
+		Assert.assertTrue( "Password error not found", passwordError);
 	}
 
 	/*Type credentials in username which are under Accepted username are sections.
@@ -45,10 +44,10 @@ public class UserAccessTests extends CommonConditions {
 	@Test
 	public void uc3(){
 		User testUser = new User("standard_user", "secret_sauce");
-		boolean usernameError = new LoginPage(driver)
+		boolean successLabelVisibility = new LoginPage(driver)
 				.openPage()
 				.login(testUser)
 				.checkAppLogo();
-		Assert.assertTrue(usernameError, "Username error not found");
+		Assert.assertTrue("Label not found", successLabelVisibility);
 	}
 }
