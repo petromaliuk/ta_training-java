@@ -69,7 +69,25 @@ public class LoginPage extends AbstractPage
 		String s = error.get(0).getAttribute("innerHTML");
 		return s.contains(str);
 	}
-	public void clear(WebElement element){
+	public LoginPage pressSubmit(){
+		buttonSubmit.click();
+		return this;
+	}
+	public LoginPage putDataInFields(User user){
+		inputLogin.sendKeys(user.getUsername());
+		inputPassword.sendKeys(user.getPassword());
+		return this;
+	}
+	public LoginPage clearAllFields(){
+		clear(inputLogin);
+		clear(inputPassword);
+		return this;
+	}
+	public LoginPage clearPasswordField(){
+		clear(inputPassword);
+		return this;
+	}
+	private void clear(WebElement element){
 		element.sendKeys(Keys.CONTROL + "a");
 		element.sendKeys(Keys.DELETE);
 	}

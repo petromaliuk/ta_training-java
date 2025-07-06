@@ -2,6 +2,7 @@ package com.epam.ta.test;
 
 import com.epam.ta.model.User;
 import com.epam.ta.page.LoginPage;
+import com.epam.ta.service.UserCreator;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,10 +17,12 @@ public class UserAccessTests extends CommonConditions {
 	Check the error messages: "Username is required".*/
 	@Test
 	public void uc1(){
-		User testUser = new User("Petro", "Password");
+		User testUser = UserCreator.withCredentialsFromProperty();
 		boolean usernameError = new LoginPage(driver)
 				.openPage()
-				.uc1(testUser)
+				.putDataInFields(testUser)
+				.clearAllFields()
+				.pressSubmit()
 				.checkErrorContains(USERNAME_ERROR);
 		Assert.assertTrue( "Username error not found", usernameError);
 	}
@@ -30,10 +33,12 @@ public class UserAccessTests extends CommonConditions {
 	Hit the "Login" button.*/
 	@Test
 	public void uc2(){
-		User testUser = new User("Petro", "Password");
+		User testUser = UserCreator.withCredentialsFromProperty();
 		boolean passwordError = new LoginPage(driver)
 				.openPage()
-				.uc2(testUser)
+				.putDataInFields(testUser)
+				.clearPasswordField()
+				.pressSubmit()
 				.checkErrorContains(PASSWORD_ERROR);
 		Assert.assertTrue( "Password error not found", passwordError);
 	}
@@ -43,7 +48,7 @@ public class UserAccessTests extends CommonConditions {
 	Click on Login and validate the title “Swag Labs” in the dashboard.*/
 	@Test
 	public void uc3(){
-		User testUser = new User("standard_user", "secret_sauce");
+		User testUser = UserCreator.withGoodCredentialsFromProperty();
 		boolean successLabelVisibility = new LoginPage(driver)
 				.openPage()
 				.login(testUser)
