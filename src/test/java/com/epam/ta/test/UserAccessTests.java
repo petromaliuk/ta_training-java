@@ -46,7 +46,7 @@ public class UserAccessTests extends CommonConditions {
 	/*Type credentials in username which are under Accepted username are sections.
 	Enter password as secret sauce.
 	Click on Login and validate the title “Swag Labs” in the dashboard.*/
-	@Test
+	@Test()
 	public void uc3(){
 		User testUser = UserCreator.withGoodCredentialsFromProperty();
 		boolean successLabelVisibility = new LoginPage(driver)
